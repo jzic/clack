@@ -1,14 +1,15 @@
 # Clack
 
-**Mission control for running a lot of Claude Code sessions at once.**
+**A Slack-esque experience for Claude Code.**
 
 ![Clack: the dock beside a live Claude Code session](docs/screenshot.jpg)
 
 Running eight Claudes in parallel is amazing, until you notice you've become a
 hamster on a wheel: flipping between terminal tabs, checking who's done, who's
-stuck, who's asking you something, and who's still just working. Clack puts every
-session in one window and tells you, at a glance, **who needs you and why**, so
-you stop polling and only show up when there's something to do.
+stuck, who's asking you something, and who's still just working. Clack gives each
+session a channel, like Slack, all in one window, and tells you at a glance
+**who needs you and why**, so you stop polling and only show up when there's
+something to do.
 
 - **The dock.** Every session gets a row in a fixed spot, beside the terminal
   you're working in. A session that's waiting on you shows the actual question

@@ -2,7 +2,7 @@
   "name": "clack",
   "version": "0.1.0",
   "private": true,
-  "description": "Mission control for running many Claude Code sessions at once",
+  "description": "Slack-esque experience for Claude Code",
   "workspaces": [
     "server",
     "web"
