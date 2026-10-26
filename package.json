@@ -1,0 +1,27 @@
+{
+  "name": "clack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mission control for running many Claude Code sessions at once",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "setup": "bash scripts/setup.sh",
+    "update": "bash scripts/update.sh",
+    "dev:server": "npm run dev -w server",
+    "dev:web": "npm run dev -w web",
+    "build": "npm run build -w web",
+    "start": "npm run start -w server",
+    "test": "npm test -w server",
+    "print-hooks": "npm run print-hooks -w server",
+    "hooks:install": "node scripts/install-hooks.mjs install",
+    "hooks:uninstall": "node scripts/install-hooks.mjs uninstall",
+    "launchd:install": "npm run launchd:install -w server",
+    "launchd:uninstall": "npm run launchd:uninstall -w server"
+  }
+}
