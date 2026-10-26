@@ -1,0 +1,54 @@
+name: Bug report
+description: Something in Clack is broken or behaves wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what Clack did instead. Screenshots help a lot.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start a channel in ...
+        2. ...
+  - type: dropdown
+    id: hooks
+    attributes:
+      label: Are Clack's Claude Code hooks installed?
+      description: "`npm run hooks:install`. Without them, states come from terminal output and are much less accurate."
+      options:
+        - "Yes"
+        - "No"
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: "e.g. 15.4"
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+      placeholder: "output of `node -v`"
+    validations:
+      required: true
+  - type: input
+    id: claude
+    attributes:
+      label: Claude Code version
+      placeholder: "output of `claude --version`"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Server log or browser console errors
+      description: Anything relevant from the terminal running Clack, or the browser's developer console.
+      render: text

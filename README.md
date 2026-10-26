@@ -168,6 +168,12 @@ CLACK_CONFIG=/tmp/clack-test.json CLACK_PORT=8228 npx tsx server/src/index.ts
   native wrapper (e.g. Tauri) could add both; the PWA install was chosen to
   avoid code signing and keep `git pull` updates.
 
+## Feedback
+
+Clack is young, and feedback is what shapes it. If something's broken, confusing,
+or missing, [open an issue](https://github.com/jzic/clack/issues/new/choose):
+there's a short form for bugs and one for ideas. Pull requests are welcome too.
+
 ## License
 
 [MIT](LICENSE)

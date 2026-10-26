@@ -1,0 +1,21 @@
+name: Idea or feature request
+description: Something that would make Clack better
+labels: [idea]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem?
+      description: What were you trying to do, and where did Clack get in the way or fall short?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like instead?
+      description: Rough is fine. Sketches and screenshots welcome.
+  - type: input
+    id: scale
+    attributes:
+      label: How many Claude sessions do you usually run at once?
+      placeholder: "e.g. 3–4, 10+"
