@@ -1,5 +1,5 @@
 // Install/uninstall a launchd LaunchAgent so clack-server survives logout,
-// crashes, and app restarts (the sessions live in the server, not the UI).
+// crashes, and app restarts. Sessions live in tmux, so restarting the server is lossless.
 //
 //   npm run launchd:install
 //   npm run launchd:uninstall
@@ -64,24 +64,38 @@ function install(): void {
   fs.writeFileSync(plistPath, plist());
 
   const port = loadConfig().port;
-  if (portInUse(port)) {
-    // A server is already holding the port (and live sessions). Starting a second
-    // one now would fight for the port; forcing a handoff would kill those
-    // sessions. Install the agent but let it take over at next login instead.
-    console.log(`Installed ${LABEL}, but a Clack server is already running on port ${port}.`);
-    console.log('Left it alone so live sessions are not disrupted — the agent takes over automatically at your next login.');
-    console.log(`To hand off now instead: stop the running server, then run  launchctl load ${plistPath}`);
-    console.log('(restarting ends live channels; conversations recover with `claude --continue`).');
+  if (portInUse(port) && !agentLoaded()) {
+    // Something other than the agent holds the port, most likely `npm start` in
+    // a terminal. Loading the agent now would just lose the race for the port.
+    console.log(`Installed ${LABEL}, but a Clack server you started by hand is running on port ${port}.`);
+    console.log('Stop it (Ctrl+C in its terminal), then run this again to hand off to launchd.');
+    console.log('Your sessions keep running in tmux and reattach when the new server starts.');
     return;
   }
 
+  // Reloading restarts the server from this checkout. That's lossless: sessions
+  // live in tmux and the new server reattaches them.
+  const restarting = agentLoaded();
   try {
     execFileSync('launchctl', ['unload', plistPath], { stdio: 'ignore' });
   } catch {
     /* not loaded yet */
   }
   execFileSync('launchctl', ['load', plistPath]);
-  console.log(`Installed and loaded ${LABEL}. Clack server now starts at login and restarts on crash.`);
+  console.log(
+    restarting
+      ? `Reloaded ${LABEL} from ${repoRoot}. Your sessions carried over; reload the Clack window.`
+      : `Installed and loaded ${LABEL}. Clack server now starts at login and restarts on crash.`,
+  );
+}
+
+function agentLoaded(): boolean {
+  try {
+    execFileSync('launchctl', ['list', LABEL], { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function uninstall(): void {
